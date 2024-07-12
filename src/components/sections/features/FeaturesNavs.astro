@@ -1,0 +1,97 @@
+---
+// Import the necessary dependencies
+import TabNav from "@components/ui/blocks/TabNav.astro";
+import TabContent from "@components/ui/blocks/TabContent.astro";
+import Icon from "@components/ui/icons/Icon.astro";
+
+// Define props from Astro
+const { title, tabs } = Astro.props;
+
+// Define TypeScript interface for tab object
+interface Tab {
+  heading: string;
+  content: string;
+  svg: string;
+  src: any;
+  alt: string;
+  first?: boolean;
+  second?: boolean;
+}
+
+// Define TypeScript interface for props
+interface Props {
+  title?: string;
+  tabs: Tab[];
+}
+---
+
+<section
+  class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
+>
+  <div class="relative p-6 md:p-16">
+    <div
+      class="relative z-10 lg:grid lg:grid-cols-12 lg:items-center lg:gap-16"
+    >
+      <!-- Section's heading and tab navigation -->
+      <div class="mb-10 lg:order-2 lg:col-span-6 lg:col-start-8 lg:mb-0">
+        <h2
+          class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 sm:text-3xl"
+        >
+          <!-- About Fragment: https://docs.astro.build/en/basics/astro-syntax/#fragments -->
+          <Fragment set:html={title} />
+        </h2>
+        <!-- Tab navigation - use the attribute 'first' in the first TabNav for the component to work -->
+        <nav class="mt-5 grid gap-4 md:mt-10" aria-label="Tabs" role="tablist">
+          {
+            tabs.map((tab, index) => (
+              <TabNav
+                id={`tabs-with-card-item-${index + 1}`}
+                dataTab={`#tabs-with-card-${index + 1}`}
+                aria={`tabs-with-card-${index + 1}`}
+                heading={tab.heading}
+                content={tab.content}
+                first={tab.first}
+              >
+                <slot name="food-icon"></slot>
+               
+              </TabNav>
+            ))
+          }
+        </nav>
+        <!--  <svg  xmlns="http://www.w3.org/2000/svg"  width="92"  height="92"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="text-gray-700 dark:text-white icon icon-tabler icons-tabler-outline icon-tabler-hemisphere"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9m-9 0a9 3 0 1 0 18 0a9 3 0 1 0 -18 0" /><path d="M3 9a9 9 0 0 0 18 0" /></svg>-->
+
+      </div>
+      <!--  <Icon name={tab.svg} /> -->
+      <!-- Contents for each tab - the 'first' attribute should be used in the first tab for that tab to be initially visible, 'second' changes the styles -->
+      <div class="lg:col-span-6">
+        <div class="relative">
+          <div>
+            {
+              tabs.map((tab, index) => (
+                <TabContent
+                  id={`tabs-with-card-${index + 1}`}
+                  aria={`tabs-with-card-item-${index + 1}`}
+                  src={tab.src}
+                  alt={tab.alt}
+                  first={tab.first}
+                  second={tab.second}
+                />
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute inset-0 grid h-full w-full grid-cols-12">
+      <!-- Decorative background and sizing -->
+      <div
+        class="col-span-full h-5/6 w-full rounded-xl bg-neutral-100 dark:bg-white/[.075] sm:h-3/4 lg:col-span-7 lg:col-start-6 lg:h-full"
+      >
+      </div>
+    </div>
+  </div>
+</section>
+<!--Import the necessary Tabs plugin-->
+<!--https://preline.co/plugins/html/tabs.html-->
+<script is:inline src="/scripts/vendor/preline/tabs/index.js"></script>

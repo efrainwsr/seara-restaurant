@@ -1,0 +1,75 @@
+---
+import { Image } from "astro:assets";
+import product5 from "@images/features-image.avif";
+
+// Define props from Astro
+const { title, subTitle, benefits } = Astro.props;
+
+// Define TypeScript interface for props
+interface Props {
+  title: string;
+  subTitle?: string;
+  benefits?: Array<string>;
+}
+
+// Define SVG marker to be used in the component
+const ListItemMarker: string = `<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mt-0.5 h-6 w-6 text-orange-400 dark:text-orange-300 flex-none"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>`;
+---
+
+<section
+  class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
+>
+  <!-- Grid -->
+  <div class="lg:grid lg:grid-cols-12 lg:items-center lg:gap-16">
+    <div class="lg:col-span-7">
+
+      <iframe class="w-full h-[320px] md:w-[640px] md:h-[320px]"  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3355.657933425489!2d-17.192209899999998!3d32.74827259999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xc605140e507f6d1%3A0xd4230903895662c9!2sSeara%20Restaurante!5e0!3m2!1ses!2sve!4v1720722406423!5m2!1ses!2sve"   style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+     
+      <!--  <Image class="rounded-xl" src={product5} alt="Mockup of floating boxes" /> -->
+    </div>
+
+    <div class="mt-5 sm:mt-10 lg:col-span-5 lg:mt-0">
+      <div class="space-y-6 sm:space-y-8">
+        <div class="space-y-2 md:space-y-4">
+          <h2 class="text-balance text-3xl font-bold text-neutral-800 dark:text-neutral-200 lg:text-4xl">
+            {title}
+          </h2>
+
+          {
+            subTitle && (
+              <p class="text-pretty text-neutral-600 dark:text-neutral-400">
+                {subTitle}
+              </p>
+            )
+          }
+          
+        </div>
+        {
+          benefits && (
+            <ul class="space-y-2 sm:space-y-4">
+              {benefits.map((item) => (
+                
+                <li class="flex space-x-3">
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="text-gray-700 dark:text-white icon icon-tabler icons-tabler-outline icon-tabler-map-pin"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" /></svg>
+                  <span class="text-pretty text-base font-medium text-neutral-600 dark:text-neutral-400">
+                   <a href="https://maps.app.goo.gl/5nrJP7MczdWzG26L9" target="_blank">
+                    {item}
+                  </a>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .map-md{
+    width: 640px;
+    height: 360px;
+}
+
+</style>
